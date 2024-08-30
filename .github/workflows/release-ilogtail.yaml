@@ -63,13 +63,13 @@ jobs:
           ENABLE_STATIC_LINK_CRT: ON
           WITHOUTGDB: ON
           MAKE_JOBS: 16
-        run: make dist
+        run: VERSION=${{ github.ref_name }} make dist
 
       - name: Build Docker And Push
         env:
           DOCKER_PUSH: true
           DOCKER_REPOSITORY: ghcr.io/jarvis-u/ilogtail
-        run: VERSION=${GITHUB_REF_NAME#v} make docker
+        run: VERSION=${{ github.ref_name }} make docker
 
   result:
     runs-on: ubuntu-latest
