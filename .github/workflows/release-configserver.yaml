@@ -41,14 +41,14 @@ jobs:
           DOCKER_TAG: ${{ github.ref_name }}
         run: |
           # Build Docker image
-          docker build -t $DOCKER_REPOSITORY:$DOCKER_TAG -f Dockerfile .
+          docker build -t $DOCKER_REPOSITORY:$DOCKER_TAG -f config_server/service/Dockerfile config_server/service
           # Push Docker image
           docker push $DOCKER_REPOSITORY:$DOCKER_TAG
 
   result:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [CI]
+    needs: [ CI ]
     steps:
       - name: Build Result
         run: echo "Just to make the GitHub merge button green"
