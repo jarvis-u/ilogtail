@@ -16,9 +16,9 @@ package agent
 
 import (
 	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"log"
 
 	"config-server/common"
 	"config-server/manager"
@@ -35,6 +35,7 @@ func HeartBeat(c *gin.Context) {
 		c.ProtoBuf(common.BadRequest.Status, res)
 		return
 	}
+	log.Printf("heart beat req is %+v\n", &req)
 	res.RequestId = req.RequestId
 
 	if req.AgentId == "" {
@@ -49,4 +50,5 @@ func HeartBeat(c *gin.Context) {
 		c.ProtoBuf(common.BadRequest.Status, res)
 	}
 	c.ProtoBuf(manager.ConfigManager().CheckConfigUpdatesWhenHeartbeat(&req, res))
+	log.Printf("heart beat res is %+v\n", res)
 }

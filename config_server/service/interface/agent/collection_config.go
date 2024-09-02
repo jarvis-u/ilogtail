@@ -17,6 +17,7 @@ package agent
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"log"
 
 	"config-server/common"
 	"config-server/manager"
@@ -33,6 +34,7 @@ func FetchPipelineConfig(c *gin.Context) {
 		c.ProtoBuf(common.BadRequest.Status, res)
 		return
 	}
+	log.Printf("pipeline config req is %+v\n", &req)
 	res.RequestId = req.RequestId
 
 	if req.ReqConfigs == nil {
@@ -40,6 +42,7 @@ func FetchPipelineConfig(c *gin.Context) {
 	}
 
 	c.ProtoBuf(manager.ConfigManager().FetchPipelineConfig(&req, res))
+	log.Printf("pipeline config res is %+v\n", res)
 }
 
 func FetchAgentConfig(c *gin.Context) {
@@ -52,6 +55,7 @@ func FetchAgentConfig(c *gin.Context) {
 		c.ProtoBuf(common.BadRequest.Status, res)
 		return
 	}
+	log.Printf("agent config req is %+v\n", &req)
 	res.RequestId = req.RequestId
 
 	if req.ReqConfigs == nil {
@@ -59,4 +63,5 @@ func FetchAgentConfig(c *gin.Context) {
 	}
 
 	c.ProtoBuf(manager.ConfigManager().FetchAgentConfig(&req, res))
+	log.Printf("agent config res is %+v\n", res)
 }
